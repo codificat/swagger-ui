@@ -1,12 +1,12 @@
-FROM alpine:3.3
+FROM progrium/busybox
 
-MAINTAINER Roman Tarnavski
+MAINTAINER Pep
 
-RUN apk add --update nginx
+RUN opkg-install uhttpd
 
-COPY nginx.conf /etc/nginx/
-ADD ./dist/ /usr/share/nginx/html
+ADD ./dist/ /www
 
 EXPOSE 8080
 
-CMD nginx -g 'daemon off;'
+CMD ""
+ENTRYPOINT ["/usr/sbin/uhttpd", "-f", "-p", "8080", "-h", "/www"]
